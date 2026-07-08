@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olist E-Commerce Sales & Customer Analytics</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Vanilla CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <div class="logo-area">
+                <i data-lucide="shopping-bag" class="logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Olist Analytics</h1>
+                    <p>Brazilian E-Commerce Exploratory Data Analysis</p>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="data-badge">
+                    <span class="pulse-indicator"></span>
+                    Live Data Pipeline Connected
+                </div>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
+                    <i data-lucide="sun" id="sun-icon"></i>
+                    <i data-lucide="moon" id="moon-icon" class="hidden"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-content">
+            <!-- View Selector tabs -->
+            <div class="tabs-bar">
+                <button class="tab-btn active" data-tab="interactive">
+                    <i data-lucide="bar-chart-3"></i> Interactive Dashboard
+                </button>
+                <button class="tab-btn" data-tab="static-visuals">
+                    <i data-lucide="image"></i> Static Matplotlib Visuals
+                </button>
+                <button class="tab-btn" data-tab="insights">
+                    <i data-lucide="lightbulb"></i> Business Insights
+                </button>
+            </div>
+
+            <!-- Tab 1: Interactive Dashboard -->
+            <section id="interactive-tab" class="tab-pane active">
+                <!-- KPI Grid -->
+                <div class="kpi-grid" id="kpi-container">
+                    <!-- Revenue KPI -->
+                    <div class="kpi-card purple">
+                        <div class="kpi-header">
+                            <span>Gross Merchandise Value</span>
+                            <i data-lucide="dollar-sign"></i>
+                        </div>
+                        <div class="kpi-value" id="kpi-revenue">R$ 0.00M</div>
+                        <div class="kpi-footer">Total sales revenue (BRL)</div>
+                    </div>
+                    <!-- Orders KPI -->
+                    <div class="kpi-card blue">
+                        <div class="kpi-header">
+                            <span>Total Orders</span>
+                            <i data-lucide="shopping-cart"></i>
+                        </div>
+                        <div class="kpi-value" id="kpi-orders">0</div>
+                        <div class="kpi-footer" id="kpi-aov">AOV: R$ 0.00</div>
+                    </div>
+                    <!-- Customers KPI -->
+                    <div class="kpi-card teal">
+                        <div class="kpi-header">
+                            <span>Unique Customers</span>
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="kpi-value" id="kpi-customers">0</div>
+                        <div class="kpi-footer" id="kpi-repeat-rate">Repeat Rate: 0.00%</div>
+                    </div>
+                    <!-- Delivery KPI -->
+                    <div class="kpi-card orange">
+                        <div class="kpi-header">
+                            <span>Avg Delivery Time</span>
+                            <i data-lucide="truck"></i>
+                        </div>
+                        <div class="kpi-value" id="kpi-delivery-time">0.0 days</div>
+                        <div class="kpi-footer" id="kpi-late-rate">Late Rate: 0.00%</div>
+                    </div>
+                </div>
+
+                <!-- Charts Layout Grid -->
+                <div class="charts-grid">
+                    <!-- Monthly Trend -->
+                    <div class="chart-card span-2">
+                        <h3>Monthly Revenue Trend</h3>
+                        <div class="chart-container">
+                            <canvas id="monthlyRevenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Category Share -->
+                    <div class="chart-card">
+                        <h3>Top 10 Product Categories by Revenue</h3>
+                        <div class="chart-container">
+                            <canvas id="categoryRevenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Customer States -->
+                    <div class="chart-card">
+                        <h3>Top 10 States by Unique Customers</h3>
+                        <div class="chart-container">
+                            <canvas id="stateCustomersChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Payment split -->
+                    <div class="chart-card">
+                        <h3>Payment Type Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="paymentTypesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Delivery histogram -->
+                    <div class="chart-card">
+                        <h3>Delivery Lead Time Distribution (days)</h3>
+                        <div class="chart-container">
+                            <canvas id="deliveryDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Static Matplotlib Visuals -->
+            <section id="static-visuals-tab" class="tab-pane">
+                <div class="visuals-intro">
+                    <h2>Static High-DPI Visualizations</h2>
+                    <p>These are the high-quality static charts exported by the Python script using Seaborn and Matplotlib.</p>
+                </div>
+                <div class="static-grid">
+                    <div class="static-card">
+                        <h4>Monthly Revenue Trend</h4>
+                        <img src="output/output_monthly_revenue.png" alt="Monthly Revenue Trend Line Chart">
+                    </div>
+                    <div class="static-card">
+                        <h4>Top 10 Product Categories by Revenue</h4>
+                        <img src="output/output_top_categories.png" alt="Top Product Categories Bar Chart">
+                    </div>
+                    <div class="static-card">
+                        <h4>Customer Count by Brazilian State</h4>
+                        <img src="output/output_top_states.png" alt="Customer State Bar Chart">
+                    </div>
+                    <div class="static-card">
+                        <h4>Payment Methods Breakdown</h4>
+                        <img src="output/output_payment_types.png" alt="Payment Types Distribution Bar Chart">
+                    </div>
+                    <div class="static-card">
+                        <h4>Delivery Time Distribution Histogram</h4>
+                        <img src="output/output_delivery_times.png" alt="Delivery Times Distribution Histogram">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Business Insights -->
+            <section id="insights-tab" class="tab-pane">
+                <div class="insights-grid">
+                    <div class="insight-column">
+                        <h2>Exploratory Findings & Dynamics</h2>
+                        <div class="insights-list" id="insights-list-container">
+                            <!-- Populated dynamically via app.js -->
+                        </div>
+                    </div>
+                    
+                    <div class="insight-column">
+                        <h2>Strategic Actions & Recommendations</h2>
+                        <div class="rec-card">
+                            <div class="rec-badge purple">Loyalty</div>
+                            <h3>Implement Retention Marketing</h3>
+                            <p>With a repeat purchase rate of only <strong>3.12%</strong>, Olist functions as an acquisition-first marketplace. Creating targeted post-purchase retention email campaigns, segmenting users, and rolling out a membership model can unlock massive Lifetime Value (LTV).</p>
+                        </div>
+                        <div class="rec-card">
+                            <div class="rec-badge teal">Logistics</div>
+                            <h3>Optimise Logistics Node Distribution</h3>
+                            <p>São Paulo (SP) represents the heavy majority of customers. However, the late delivery rate is <strong>6.77%</strong> and average wait times are <strong>12.1 days</strong>. Deploying regional micro-warehouses outside SP (e.g. RJ, MG, and the South) can help slash transit times and delivery volatility.</p>
+                        </div>
+                        <div class="rec-card">
+                            <div class="rec-badge orange">Pricing</div>
+                            <h3>Dynamic Freight and Bundling</h3>
+                            <p>Average Order Value (AOV) is <strong>R$ 160.58</strong>. Integrate smart cross-selling suggestions and recommend item bundles at checkout (e.g., matching low-cost accessories to health/beauty or electronics items) to push AOV values higher.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Olist Brazilian E-Commerce Exploratory Data Analysis &bull; Designed in Planning Mode</p>
+        </footer>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
